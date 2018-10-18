@@ -33,7 +33,7 @@ module SessionManagement::User
   def check_current_password
     if password && password_digest? && ! skip_current_password_check
       unless User.authenticate(email, current_password)
-        errors.add(:current_password, 'Enter your current password')
+        errors.add(:current_password, "Enter your current password to change it")
         return false
       end
     end
