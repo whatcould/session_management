@@ -18,6 +18,7 @@ module SessionManagement::User
     end
 
     def find_by_case_insensitive_email(email)
+      return nil if email.blank?
       find_by(email: email) || where('LOWER(email) = ?', email.downcase).first
     end
   end
