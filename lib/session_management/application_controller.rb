@@ -4,20 +4,18 @@ module SessionManagement::ApplicationController
   extend ActiveSupport::Concern
 
   def log_in(user, opts = {})
-    if opts[:permanent]
-      cookies.permanent[:auth_token] = user.auth_token
-    elsif opts[:provider]
-      cookies[:auth_token] = { value: user.auth_token, expires: 1.week.from_now }
-    else
-      cookies[:auth_token] = user.auth_token
-    end
+    reset_session
+    session[:user_id] = user.id
+  end
+
+  def log_out
+    reset_session
   end
 
   def current_user
     @current_user ||= begin
-      if cookies[:auth_token]
-        user = ::User.find_by_auth_token(cookies[:auth_token])
-        cookies.delete(:auth_token) if ! user
+      if session[:user_id]
+        user = ::User.find_by(id: session[:user_id])
         user
       end
     end
