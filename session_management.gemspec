@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'session_management'
-  s.version     = '0.0.2'
+  s.version     = '0.0.3'
   s.date        = '2018-12-03'
   s.summary     = "Simple Rails User Session Management"
   s.description = "Basic concerns for simple user login"

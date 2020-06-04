@@ -4,18 +4,17 @@ module SessionManagement::ApplicationController
   extend ActiveSupport::Concern
 
   def log_in(user, opts = {})
-    reset_session
-    session[:user_id] = user.id
+    cookies.encrypted[:user_id] = user.id
   end
 
   def log_out
-    reset_session
+    cookies.delete(:user_id)
   end
 
   def current_user
     @current_user ||= begin
-      if session[:user_id]
-        user = ::User.find_by(id: session[:user_id])
+      if cookies.encrypted[:user_id]
+        user = ::User.find_by(id: cookies.encrypted[:user_id])
         user
       end
     end
