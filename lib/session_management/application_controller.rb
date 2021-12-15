@@ -8,6 +8,8 @@ module SessionManagement::ApplicationController
       cookies.permanent[:auth_token] = user.auth_token
     elsif opts[:provider]
       cookies[:auth_token] = { value: user.auth_token, expires: 1.week.from_now }
+    elsif opts[:one_month]
+      cookies[:auth_token] = { value: user.auth_token, expires: 1.month.from_now }
     else
       cookies[:auth_token] = user.auth_token
     end
