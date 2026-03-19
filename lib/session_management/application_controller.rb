@@ -5,13 +5,13 @@ module SessionManagement::ApplicationController
 
   def log_in(user, opts = {})
     if opts[:permanent]
-      cookies.encrypted.permanent[:auth_token] = user.auth_token
+      cookies.encrypted.permanent[:auth_token] = {value: user.auth_token, httponly: true}
     elsif opts[:provider]
-      cookies.encrypted[:auth_token] = { value: user.auth_token, expires: 1.week.from_now }
+      cookies.encrypted[:auth_token] = { value: user.auth_token, expires: 1.week.from_now, httponly: true }
     elsif opts[:one_month]
-      cookies.encrypted[:auth_token] = { value: user.auth_token, expires: 1.month.from_now }
+      cookies.encrypted[:auth_token] = { value: user.auth_token, expires: 1.month.from_now, httponly: true }
     else
-      cookies.encrypted[:auth_token] = user.auth_token
+      cookies.encrypted[:auth_token] = {value: user.auth_token, httponly: true}
     end
   end
 
