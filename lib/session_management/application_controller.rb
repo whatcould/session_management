@@ -19,7 +19,7 @@ module SessionManagement::ApplicationController
     @current_user ||= begin
       if cookies.encrypted[:auth_token]
         user = ::User.find_by_auth_token(cookies.encrypted[:auth_token])
-        cookies.encrypted.delete(:auth_token) if ! user
+        cookies.delete(:auth_token) if ! user
         user
       end
     end
